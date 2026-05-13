@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +45,7 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     // remember:変数の状態を常に保持する(Next.js の useState と似ている)
     val hello = remember { mutableStateOf("こんにちは") }
+    val context = LocalContext.current
     // 縦に並べて表示する
     Column(
         modifier = modifier
@@ -59,6 +62,12 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             hello.value = "こんばんは"
         }) {
             Text("夜")
+        }
+        Button(onClick = {
+            hello.value = "おはよう"
+            Toast.makeText(context, "変更しました", Toast.LENGTH_SHORT).show() // 下から表示されるメッセージ
+        }) {
+            Text("朝")
         }
     }
 }
